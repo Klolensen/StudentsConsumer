@@ -11,27 +11,27 @@ namespace StudentsConsumer
     {
         static void Main(string[] args)
         {
-            using (var client = new StudentService.Service1Client())
+            using (Service1Client client = new Service1Client())
             {
                 client.AddStudent("Kevin Jensen", "Program", "E202");
                 Console.WriteLine(client.GetAllStudent().Length);
-                foreach (var student in client.GetAllStudent())
+                Console.WriteLine(client.FindStudents("Kevin Jensen"));
+                client.RemoveStudent("Kevin Jensen");
+            }
+
+            using (Service1Client client = new Service1Client())
+            {
+                client.RemoveStudent("Kevin Jensen");
+                client.RemoveStudent("John Doe");
+                client.AddStudent("Kevin Jensen", "Program", "E202");
+                client.EditStudent("Kevin Jensen", "John Doe", "Technology", "E202");
+                List<string> list = new List<string>(client.GetAllStudent());
+                foreach (string student in list)
                 {
                     Console.WriteLine(student);
                 }
-                
+                Console.WriteLine(client.FindStudents("John Doe"));
             }
-
-            //using (var client = new StudentService.Service1Client())
-            //{   
-            //    client.AddStudent("Kevin Jensen", "Program" , "E202");
-            //    string student = client.FindStudents("Kevin Jensen");
-            //    Console.WriteLine(student);
-            //    client.EditStudent("Kevin Jensen", "John Doe", "Technology", "E202");
-            //    Console.WriteLine(client.FindStudents("John Doe"));
-            //    client.RemoveStudent("John Doe");
-            //    Console.WriteLine(client.GetAllStudent().Length);
-            //}
             Console.ReadKey();
         }
     }
